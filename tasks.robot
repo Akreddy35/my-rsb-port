@@ -4,7 +4,6 @@ Documentation     Orders robots from RobotSpareBin Industries Inc.
 ...               Saves the screenshot of the ordered robot.
 ...               Embeds the screenshot of the robot to the PDF receipt.
 ...               Creates ZIP archive of the receipts and the images.
-#Library           RPA.Robocorp.Vault
 Library           RPA.Dialogs
 Library           RPA.HTTP
 Library           RPA.Tables
@@ -13,12 +12,9 @@ Library           RPA.PDF
 Library           RPA.Archive
 Library           RPA.FileSystem
 
-*** Variables ***
-#&{ASSETS}
 
 *** Tasks ***
 Order robots from RobotSpareBin Industries Inc
-    #${ASSETS}=    Get Secret    assets
     Open the robot order website
     ${robot_orders}=    Get orders
     FOR    ${row}    IN    @{robot_orders}
@@ -91,8 +87,7 @@ Close the browser
     Add heading    Close the browser
     Add submit buttons    close
     ${result}=    Run dialog
-    IF    ${result} == "Yes"
-        close browser
-    END
+    IF    $result.submit == "close"    close browser
+    
         
          
